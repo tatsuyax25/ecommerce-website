@@ -10,8 +10,8 @@ const Home: NextPage = () => {
         <link rel="icon" href = "/favicon.ico" />
       </Head>
 
-      <main className = "container mx-auto" >
-        <h1 className="h-1" > Hello </h1>
+      <main className = "container mx-auto">
+        <h1 className="h-1"> Hello </h1>
       </main>
     </div>
     );
