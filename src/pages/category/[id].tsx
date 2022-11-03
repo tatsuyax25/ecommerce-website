@@ -76,8 +76,25 @@ const SingleCategory = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="container mx-auto">
-                        <Navbar />
+                <Navbar />
+                {isLoading ? (
+                    <Skelton />
+                ) : (
+                    <>
+                        {allProductsWithCategory &&
+                            allProductsWithCategory.products.length > 0 && (
+                                <ProductGrid
+                                    hasMore={allProductsWithCategory.hasMore}
+                                    showLink={false}
+                                    categories={[allProductsWithCategory]}
+                                    loadMoreFun={fetchNextPage}
+                                />
+                            )}
+                    </>
+                )}
             </main>
         </div>
-    )
-}
+    );
+};
+
+export default SingleCategory;
