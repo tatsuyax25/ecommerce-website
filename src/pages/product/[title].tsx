@@ -43,4 +43,14 @@ const SingleProduct = () => {
             }
         }
     );
+
+    const { data, isLoading } = useQuery(
+        [`singleProduct, ${router?.query?.title}`],
+        getSingleProduct,
+        {
+            enabled: !!router?.query?.title,
+        }
+    );
+
+    const product = data?.product;
 };
