@@ -24,4 +24,23 @@ const SingleProduct = () => {
             throw error;
         }
     };
+
+    const { mutate, isLoading: mutationIsLoading } = useMutation(
+        async (body: any) => {
+            try {
+                const respJSON = await fetch("/api/create-checkout-session", {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                });
+                const resp = await respJSON.json();
+                const stripe = (await stripePromiseclientSide) as Stripe;
+                const result = await stripe.redirectToCheckout({
+                    sessionId: resp.id,
+                });
+                return result;
+            } catch (error) {
+                throw error;
+            }
+        }
+    );
 };
