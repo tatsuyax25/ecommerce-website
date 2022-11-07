@@ -12,6 +12,20 @@ const ThankYou = () => {
                 <meta name="description" content="All Products" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            <main className="container mx-auto">
+                <Navbar />
+                <div className="rounded-md bg-green-50 p-4 mt-8">
+                    <div className="flex">
+                        <div className="flex-shrink-0">
+                            <HiCheckCircle 
+                                className="h-5 w-5 text-green-400" 
+                                aria-hidden="true" 
+                            />
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     )
 }
