@@ -23,9 +23,30 @@ const ThankYou = () => {
                                 aria-hidden="true" 
                             />
                         </div>
+                        <div className="ml-3">
+                            <h3 className="text-sm font-medium text-green-800">
+                                Order Placed
+                            </h3>
+                            <div className="mt-2 text-sm text-green-700">
+                                <p>
+                                    Thank you for your Order. We have placed the 
+                                    order and your email will recieve further 
+                                    details.
+                                </p>
+                            </div>
+                            <button 
+                                onClick={() => router.push("/")} 
+                                type="button" 
+                                className="inline-flex items-center rounded-md border border-transparent bg-sky-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-900 mt-4"
+                            >
+                                Continue Shopping
+                            </button>
+                        </div>
                     </div>
                 </div>
             </main>
         </div>
-    )
-}
+    );
+};
+
+export default ThankYou;
