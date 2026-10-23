@@ -48,7 +48,7 @@ const SingleCategory = () => {
             if (page.category?.name) {
                 allProductsWithCategory.name = page.category?.name;
             }
-            if (page.category?.products && page.category?.product.length > 0) {
+            if (page.category?.products && page.category?.products.length > 0) {
                 allProductsWithCategory.products.push(
                     ...page.category?.products
                 );
