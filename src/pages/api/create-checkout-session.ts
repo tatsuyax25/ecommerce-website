@@ -6,12 +6,18 @@ import { TApiErrorResp } from "../../types";
 
 const checkoutSession = async (
     req: NextApiRequest,
-    res: NextApiResponse<any | TApiErrorResp>
+    res: NextApiResponse<{ id: string } | TApiErrorResp>
 ) => {
     try {
         const host = req.headers.origin;
         const referer = req.headers.referer;
-        const body = JSON.parse(req.body);
+        if (!req.body) {
+            return res.status(400).json({ message: "Request body is missing" });
+        }
+        const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+        if (!body.price || !body.title || !body.image) {
+            return res.status(400).json({ message: "Missing required fields: price, title, image" });
+        }
         const formatedPrice = currency(body.price, {
             precision: 2,
             symbol: "",

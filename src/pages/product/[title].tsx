@@ -1,4 +1,4 @@
-import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import NextImage from "next/image";
@@ -26,14 +26,15 @@ const SingleProduct = () => {
     };
 
     const { mutate, isLoading: mutationIsLoading } = useMutation(
-        async (body: any) => {
+        async (body: { title: string; image: string; description: string; price: string }) => {
             try {
                 const respJSON = await fetch("/api/create-checkout-session", {
                     method: "POST",
                     body: JSON.stringify(body),
                 });
                 const resp = await respJSON.json();
-                const stripe = (await stripePromiseclientSide) as Stripe;
+                const stripe = await stripePromiseclientSide;
+                if (!stripe) throw new Error("Stripe failed to load");
                 const result = await stripe.redirectToCheckout({
                     sessionId: resp.id,
                 });
@@ -75,32 +76,30 @@ const SingleProduct = () => {
                                 <div className="flex flex-col md:flex-row gap-x-8">
                                     <div className="min-h-80 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:aspect-none lg:h-80">
                                         <NextImage
-                                            layout="responsive"
-                                            width="25"
-                                            height="25"
+                                            width={25}
+                                            height={25}
                                             src={`${product?.image}`}
-                                            alt={product?.title}
+                                            alt={product?.title ?? ""}
                                             className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                         />
                                     </div>
                                     <div className="lg:col-span-5 lg:col-start-8 mt-8 md:mt-0">
                                         <h1 className="text-xl font-medium text-gray-900 ">
-                                            {product.title}
+                                            {product?.title}
                                         </h1>
                                         <p className="text-xl font-light text-gray-700 mt-4">
-                                            {product.description}
+                                            {product?.description}
                                         </p>
                                         <p className="text-xl font-normal text-gray-500 mt-4">
-                                            USD {product.price}
+                                            USD {product?.price}
                                         </p>
                                         <button
                                             onClick={() =>
                                                 mutate({
-                                                    title: product.title,
-                                                    image: product.image,
-                                                    description:
-                                                        product.description,
-                                                    price: product.price,
+                                                    title: product?.title ?? "",
+                                                    image: product?.image ?? "",
+                                                    description: product?.description ?? "",
+                                                    price: product?.price ?? "",
                                                 })
                                             }
                                             disabled={mutationIsLoading}

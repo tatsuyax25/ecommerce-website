@@ -22,7 +22,7 @@ const SingleCategory = () => {
         }
     };
 
-    const { isLoading, data, fetchNextPage, isError } = useInfiniteQuery(
+    const { isLoading, data, fetchNextPage } = useInfiniteQuery(
         [`singleCategory ${router.query.id as string}`],
         getSingleCategory,
         {
@@ -37,13 +37,13 @@ const SingleCategory = () => {
         }
     );
 
-    const allProductsWithCategory: any = {
+    const allProductsWithCategory: { name: string; products: any[]; hasMore: boolean } = {
         name: "",
         products: [],
         hasMore: true,
     };
 
-    data?.pages.map((page) => {
+    data?.pages.forEach((page) => {
         if (page?.category) {
             if (page.category?.name) {
                 allProductsWithCategory.name = page.category?.name;
